@@ -6,19 +6,42 @@ const NewsList = ({setProgress , page , setPage}) => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchdata = async () => {
-    setLoading(true)
-    setProgress(30)
-    const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&category=${category}&page=${page}&pageSize=9&apiKey=be86f4663b6a4df1905eefd41ba43afd`
+  const articlesPerPage = 9;
+const startIndex = (page - 1) * articlesPerPage;
+const paginatedArticles = list.slice(startIndex, startIndex + articlesPerPage);
+const fetchdata = async () => {
+
+  try {
+    setLoading(true);
+    setProgress(30);
+
+    // Use category if exists, otherwise fallback to q=news
+    const queryCategory = category || "top"; // default to top
+    const res = await fetch(
+      `https://newsdata.io/api/1/latest?apikey=pub_bad711916c2b47dc922911dc8f4e18c9&language=en&category=${queryCategory}`
     );
-    setProgress(60)
-    const res = await data.json();
-    setList(res.articles || []);
-    setProgress(100)
-    setLoading(false)
+
+    const data = await res.json();
+
+    if (data.status === "error") {
+      console.error("NewsData API error:", data.results?.message || data.message);
+      setList([]);
+    } else {
+      setList(Array.isArray(data.results) ? data.results : []);
+    }
+
+    setProgress(100);
+  } catch (err) {
+    console.error("Failed to fetch news:", err);
+    setList([]);
+  } finally {
+    setLoading(false);
     setTimeout(() => setProgress(0), 300);
-  };
+  }
+};
+
+
+
 
   useEffect(() => {
     fetchdata();
@@ -34,11 +57,11 @@ const NewsList = ({setProgress , page , setPage}) => {
       </div>
     ) : (
       <div className="row g-4">
-        {list.map((val, idx) => (
+        {paginatedArticles.map((val, idx) => (
           <div className="col-12 col-sm-6 col-md-4" key={idx}>
             <div className="card h-100">
               <img
-                src={val.urlToImage || "https://library.ceu.edu/wp-content/uploads/news-2444778_960_720.jpg"}
+                src={val.image_url || "https://library.ceu.edu/wp-content/uploads/news-2444778_960_720.jpg"}
                 className="card-img-top"
                 alt="news"
                 style={{ height: "200px", objectFit: "cover" }}
@@ -47,7 +70,7 @@ const NewsList = ({setProgress , page , setPage}) => {
                 <h5 className="card-title">{val.title}</h5>
                 <p className="card-text">{val.content}</p>
                 <a
-                  href={val.url}
+                  href={val.link}
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-primary mt-auto"
