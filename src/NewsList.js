@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 const NewsList = () => {
-  const { category } = useParams(); // 👈 from URL
+  const { category } = useParams(); 
   const [list, setList] = useState([]);
 
   const fetchdata = async () => {
@@ -15,7 +15,7 @@ const NewsList = () => {
 
   useEffect(() => {
     fetchdata();
-  }, [category]); // 🔥 refetch on URL change
+  }, [category]); 
 
   return (
     <div className="container mt-5">

@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Navbar';
 import NewsList from './NewsList';
