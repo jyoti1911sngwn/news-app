@@ -6,19 +6,27 @@ const NewsList = ({setProgress , page , setPage}) => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchdata = async () => {
-    setLoading(true)
-    setProgress(30)
-    const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&category=${category}&page=${page}&pageSize=9&apiKey=be86f4663b6a4df1905eefd41ba43afd`
-    );
-    setProgress(60)
-    const res = await data.json();
-    setList(res.articles || []);
-    setProgress(100)
-    setLoading(false)
+const fetchdata = async () => {
+  try {
+    setLoading(true);
+    setProgress(30);
+    // const res = await fetch(`/api/news?category=entertainment&page=1`);
+    // const res = await fetch(`https://api.thenewsapi.com/news/headlines?locale=us&language=en&category=${category}&page=${page}&pageSize=9&apiKey=${process.env.NEWS_API_KEY}`)
+    const res = await fetch(`https://api.thenewsapi.com/v1/news/headlines?locale=us&language=en&apiKey=zvPCeSPYIeJEvehpn9UaT2QrfnL6JuJWjdwRAnAd`)
+    const data = await res.json();
+
+    console.log(data); // Debug: check if articles are coming
+
+    setList(data.articles || []);
+    setProgress(100);
+  } catch (err) {
+    console.error("Failed to fetch news:", err);
+  } finally {
+    setLoading(false);
     setTimeout(() => setProgress(0), 300);
-  };
+  }
+};
+
 
   useEffect(() => {
     fetchdata();

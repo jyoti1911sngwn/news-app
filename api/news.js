@@ -3,7 +3,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&category=${category}&page=${page}&pageSize=9&apiKey=${process.env.NEWS_API_KEY}`
+      `https://api.thenewsapi.com/news/headlines?locale=us&language=en&category=${category}&page=${page}&pageSize=9&apiKey=${process.env.NEWS_API_KEY}`
     );
 
     const data = await response.json();
