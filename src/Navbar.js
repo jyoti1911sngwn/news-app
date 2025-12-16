@@ -19,6 +19,9 @@ const Navbar = () => {
         <a className="navbar-brand" href="/entertainment">
           Entertainment
         </a>
+         <a className="navbar-brand" href="/technology">
+          Technology
+        </a>
       </div>
     </nav>
   );
