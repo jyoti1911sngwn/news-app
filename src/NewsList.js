@@ -49,39 +49,65 @@ const fetchdata = async () => {
 
   return (
     <div className="container mt-5 pt-4 mb-5">
-    {loading ? (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "60vh" }}>
-        <div className="spinner-border text-danger" role="status">
-          <span className="visually-hidden">Loading...</span>
+      {loading ? (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "60vh" }}
+        >
+          <div className="spinner-border text-danger" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
-      </div>
-    ) : (
-      <div className="row g-4">
-        {paginatedArticles.map((val, idx) => (
-          <div className="col-12 col-sm-6 col-md-4" key={idx}>
-            <div className="card h-100">
-              <img
-                src={val.image_url || "https://library.ceu.edu/wp-content/uploads/news-2444778_960_720.jpg"}
-                className="card-img-top"
-                alt="news"
-                style={{ height: "200px", objectFit: "cover" }}
-              />
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{val.title}</h5>
-                <p className="card-text">{val.content}</p>
-                <a
-                  href={val.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn-primary mt-auto"
-                >
-                  See More...
-                </a>
+      ) : (
+        <div className="row g-4">
+          {paginatedArticles.map((val, idx) => (
+            <div className="col-12 col-sm-6 col-md-4" key={idx}>
+              <div className="card h-100 position-relative">
+                <img
+                  src={
+                    val.image_url ||
+                    "https://library.ceu.edu/wp-content/uploads/news-2444778_960_720.jpg"
+                  }
+                  className="card-img-top"
+                  alt="news"
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+                <img
+                  src={val.source_icon}
+                  alt="source"
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    left: "10px",
+                    height: "30px",
+                    width: "50px",
+                    objectFit: "contain",
+                    borderRadius: "4px",
+                    boxShadow: "0 0 4px rgba(0,0,0,0.3)",
+                  }}
+                />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title">{val.title}</h5>
+                  <p className="card-text">
+                    {val.description
+                      ? val.description.split(" ").slice(0, 20).join(" ") +
+                        "..."
+                      : ""}
+                  </p>
+                  <a
+                    href={val.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary mt-auto"
+                  >
+                    See More...
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>)}  
+          ))}
+        </div>
+      )}
     </div>
   );
 };
