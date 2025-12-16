@@ -22,7 +22,7 @@ const NewsList = ({setProgress , page , setPage}) => {
 
   useEffect(() => {
     fetchdata();
-  }, [category]); 
+  }, [category, page]); 
 
   return (
     <div className="container mt-5 pt-4 mb-5">

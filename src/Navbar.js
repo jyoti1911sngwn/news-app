@@ -4,9 +4,6 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-dark bg-dark fixed-top py-3">
       <div className="px-4">
-        {/* <a className="navbar-brand" href="/">
-          Home
-        </a> */}
         <a className="navbar-brand" href="/general">
           General
         </a>
