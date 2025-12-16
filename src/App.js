@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from './Navbar';
 
 function App() {
   const [list , setList] = useState([])
@@ -15,13 +16,14 @@ function App() {
     fetchdata()
   },[])
 return (
-  <div className="App container mt-4">
-    <div className="row g-4">
+  <div className="App container mt-4 mb-8">
+    <Navbar/>
+    <div className="row g-4 mt-5">
       {list.map((val, idx) => (
-        <div className="col-12 col-sm-6 col-md-4 col-lg-4" key={idx}>
+        <div className="col-12 col-sm-6 col-md-4 col-lg-4 mt-16" key={idx}>
           <div className="card h-100">
             <img
-              src={val?.urlToImage}
+              src={val.urlToImage || "https://library.ceu.edu/wp-content/uploads/news-2444778_960_720.jpg"}
               className="card-img-top"
               alt="news"
               style={{ height: "200px", objectFit: "cover" }}
